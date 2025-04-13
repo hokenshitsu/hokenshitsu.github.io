@@ -5,38 +5,59 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>みんなの保健室｜情報共有サイト</title>
 
-  <!-- スタイルシート -->
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css" />
 
   <!-- ファビコン -->
   <link rel="icon" type="image/png" href="/icon.png">
 
-  <!-- Apple Touch Icon（iOS ホーム画面） -->
+  <!-- iOS ホームアイコン -->
   <link rel="apple-touch-icon" sizes="192x192" href="/icon.png">
 
-  <!-- Safari お気に入り登録用 -->
+  <!-- Safari ピン留めアイコン -->
   <link rel="mask-icon" href="/icon.png" color="#000000">
 
-  <!-- PWA Manifest -->
+  <!-- PWA manifest -->
   <link rel="manifest" href="/manifest.json">
 
-  <!-- モバイルアプリ表示設定 -->
+  <!-- モバイル全画面表示設定 -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="mobile-web-app-capable" content="yes">
 </head>
 <body>
+  <!-- 背景 -->
   <div class="background"></div>
 
-  <!-- 中央の画像 -->
+  <!-- 中央の浮遊画像 -->
   <div class="floating-image">
     <img src="/hokenshitsu.HEIF" alt="みんなの保健室ロゴ" />
   </div>
 
-  <!-- 四隅の画像 -->
-  <img src="/1.HEIF" alt="左上" class="corner top-left" />
-  <img src="/2.HEIF" alt="右上" class="corner top-right" />
-  <img src="/3.HEIF" alt="左下" class="corner bottom-left" />
-  <img src="/4.HEIF" alt="右下" class="corner bottom-right" />
+  <!-- 四隅の画像（クリックでパネル表示） -->
+  <img src="/1.HEIF" alt="左上" class="corner top-left" onclick="toggleKanban(event)" />
+  <img src="/2.HEIF" alt="右上" class="corner top-right" onclick="toggleKanban(event)" />
+  <img src="/3.HEIF" alt="左下" class="corner bottom-left" onclick="toggleKanban(event)" />
+  <img src="/4.HEIF" alt="右下" class="corner bottom-right" onclick="toggleKanban(event)" />
+
+  <!-- スライドパネル（kanban） -->
+  <div id="kanban" onclick="event.stopPropagation()">
+    <img src="/kanban.HEIF" alt="kanban画像" />
+  </div>
+
+  <!-- スクリプト -->
+  <script>
+    const kanban = document.getElementById("kanban");
+
+    function toggleKanban(event) {
+      event.stopPropagation(); // 外側のクリックを防ぐ
+      kanban.classList.add("show");
+    }
+
+    // 画面の他の場所をクリックしたらパネルを非表示
+    document.addEventListener("click", () => {
+      kanban.classList.remove("show");
+    });
+  </script>
 </body>
 </html>
