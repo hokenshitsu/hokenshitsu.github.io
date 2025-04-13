@@ -1,4 +1,4 @@
-/* 全体のリセットと基本設定 */
+/* ベース設定 */
 body, html {
   margin: 0;
   padding: 0;
@@ -18,13 +18,14 @@ body, html {
   z-index: -1;
 }
 
-/* 中央の画像（ふわふわアニメーション付き） */
+/* 中央のふわふわ画像 */
 .floating-image {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   animation: float 4s ease-in-out infinite;
+  z-index: 1;
 }
 
 .floating-image img {
@@ -40,14 +41,14 @@ body, html {
   100% { transform: translate(-50%, -50%) translateY(0); }
 }
 
-/* 四隅の画像配置（288pxに拡大） */
+/* 四隅の画像（1.8倍サイズ） */
 .corner {
   position: absolute;
   width: 288px;
   height: 288px;
   object-fit: contain;
-  z-index: 2;
   cursor: pointer;
+  z-index: 2;
 }
 
 .top-left {
@@ -70,31 +71,25 @@ body, html {
   right: 10px;
 }
 
-/* kanbanスライドインパネル */
-#kanban {
+/* メッセージ表示エリア */
+#message-box {
   position: fixed;
-  bottom: -100%; /* 最初は完全に画面外 */
-  left: 0;
-  width: 100%;
-  height: auto;
-  max-height: 90vh;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background: rgba(255, 255, 255, 0.95);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: bottom 0.5s ease;
-  z-index: 3;
+  padding: 20px 30px;
+  border-radius: 20px;
+  font-size: 1.2em;
+  max-width: 90vw;
+  max-height: 80vh;
+  overflow-y: auto;
+  z-index: 10;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  line-height: 1.6;
 }
 
-#kanban img {
-  width: 90vw;
-  max-width: 800px;
-  height: auto;
-  object-fit: contain;
-  border-radius: 16px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-}
-
-#kanban.show {
-  bottom: 0;
+.hidden {
+  display: none;
 }
