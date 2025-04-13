@@ -36,3 +36,30 @@ body, html {
   100% { transform: translate(-50%, -50%) translateY(0); }
 }
 
+/* 四隅の画像配置 */
+.corner {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.top-left {
+  top: 10px;
+  left: 10px;
+}
+
+.top-right {
+  top: 10px;
+  right: 10px;
+}
+
+.bottom-left {
+  bottom: 10px;
+  left: 10px;
+}
+
+.bottom-right {
+  bottom: 10px;
+  right: 10px;
+}
