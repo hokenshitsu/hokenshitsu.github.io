@@ -15,7 +15,7 @@
 </head>
 <body>
 
-  <div class="background"></div>
+  <div class="background" onclick="hideMessage()"></div>
 
   <!-- 中央ロゴ画像 -->
   <div class="floating-image">
@@ -43,7 +43,7 @@
       if (id === 1) {
         message = "＝今いる人＝<br>大坪先生・川内さん・モカちゃん・はるひちゃん・はじめ・ゆい・荒川<br>［2025年4月14日12:20更新］";
       } else if (id === 2) {
-        const isOpen = true; // ← ここを false にすると閉店中になる
+        const isOpen = true; // ← ここを false にすると閉店中になります
         const status = isOpen
           ? '<span style="color: blue; font-size: 2em;">営業中</span>'
           : '<span style="color: red; font-size: 2em;">閉店中</span>';
@@ -58,11 +58,10 @@
       box.classList.remove("hidden");
     }
 
-    // 背景クリックでメッセージを非表示
-    document.body.addEventListener("click", function () {
+    function hideMessage() {
       const box = document.getElementById("message-box");
       box.classList.add("hidden");
-    });
+    }
   </script>
 
 </body>
