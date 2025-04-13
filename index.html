@@ -13,9 +13,9 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="mobile-web-app-capable" content="yes">
 </head>
-<body>
+<body onclick="hideMessage()">
 
-  <div class="background" onclick="hideMessage()"></div>
+  <div class="background"></div>
 
   <!-- 中央ロゴ画像 -->
   <div class="floating-image">
@@ -23,13 +23,13 @@
   </div>
 
   <!-- 四隅の画像 -->
-  <img src="/1.HEIF" alt="左上" class="corner top-left" onclick="showMessage(1)" />
-  <img src="/2.HEIF" alt="右上" class="corner top-right" onclick="showMessage(2)" />
-  <img src="/3.HEIF" alt="左下" class="corner bottom-left" onclick="showMessage(3)" />
-  <img src="/4.HEIF" alt="右下" class="corner bottom-right" onclick="showMessage(4)" />
+  <img src="/1.HEIF" alt="左上" class="corner top-left" onclick="showMessage(1); event.stopPropagation();" />
+  <img src="/2.HEIF" alt="右上" class="corner top-right" onclick="showMessage(2); event.stopPropagation();" />
+  <img src="/3.HEIF" alt="左下" class="corner bottom-left" onclick="showMessage(3); event.stopPropagation();" />
+  <img src="/4.HEIF" alt="右下" class="corner bottom-right" onclick="showMessage(4); event.stopPropagation();" />
 
   <!-- メッセージ表示エリア -->
-  <div id="message-box" class="hidden" onclick="event.stopPropagation()">
+  <div id="message-box" class="hidden">
     <div id="message-content"></div>
   </div>
 
@@ -43,7 +43,7 @@
       if (id === 1) {
         message = "＝今いる人＝<br>大坪先生・川内さん・モカちゃん・はるひちゃん・はじめ・ゆい・荒川<br>［2025年4月14日12:20更新］";
       } else if (id === 2) {
-        const isOpen = true; // ← ここを false にすると閉店中になります
+        const isOpen = checkOpenStatus();
         const status = isOpen
           ? '<span style="color: blue; font-size: 2em;">営業中</span>'
           : '<span style="color: red; font-size: 2em;">閉店中</span>';
@@ -61,6 +61,40 @@
     function hideMessage() {
       const box = document.getElementById("message-box");
       box.classList.add("hidden");
+    }
+
+    function checkOpenStatus() {
+      const now = new Date();
+      const JST = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Tokyo" }));
+
+      const day = JST.getDay(); // 0=日曜, 1=月曜, ..., 6=土曜
+      const hour = JST.getHours();
+      const minute = JST.getMinutes();
+
+      const timeInMinutes = hour * 60 + minute;
+
+      // 月〜金：8:25〜17:25
+      if (day >= 1 && day <= 5 && timeInMinutes >= 505 && timeInMinutes <= 1045) {
+        return true;
+      }
+
+      // 土曜日 第1 or 第3：8:25〜11:30
+      if (day === 6 && timeInMinutes >= 505 && timeInMinutes <= 690) {
+        const date = JST.getDate();
+        const month = JST.getMonth();
+        const year = JST.getFullYear();
+        const first = new Date(year, month, 1);
+        let count = 0;
+
+        for (let d = 1; d <= date; d++) {
+          const temp = new Date(year, month, d);
+          if (temp.getDay() === 6) count++;
+        }
+
+        if (count === 1 || count === 3) return true;
+      }
+
+      return false;
     }
   </script>
 
