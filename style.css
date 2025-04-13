@@ -40,13 +40,14 @@ body, html {
   100% { transform: translate(-50%, -50%) translateY(0); }
 }
 
-/* 四隅の画像配置（大きめに） */
+/* 四隅の画像配置（288pxに拡大） */
 .corner {
   position: absolute;
-  width: 160px;
-  height: 160px;
+  width: 288px;
+  height: 288px;
   object-fit: contain;
-  z-index: 1;
+  z-index: 2;
+  cursor: pointer;
 }
 
 .top-left {
@@ -67,4 +68,33 @@ body, html {
 .bottom-right {
   bottom: 10px;
   right: 10px;
+}
+
+/* kanbanスライドインパネル */
+#kanban {
+  position: fixed;
+  bottom: -100%; /* 最初は完全に画面外 */
+  left: 0;
+  width: 100%;
+  height: auto;
+  max-height: 90vh;
+  background: rgba(255, 255, 255, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: bottom 0.5s ease;
+  z-index: 3;
+}
+
+#kanban img {
+  width: 90vw;
+  max-width: 800px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+}
+
+#kanban.show {
+  bottom: 0;
 }
